@@ -13,3 +13,6 @@ yarn.lock
 
 # macOS
 .DS_Store
+
+# API Key
+secret.js
