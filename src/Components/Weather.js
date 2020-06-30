@@ -16,7 +16,9 @@ export default function Weather({ temp, condition }) {
                                   color="white"/>
           <Text style={styles.temp}>{temp}℃</Text>
         </View>
-        <View style={styles.halfContainer}>
+        <View style={{ ...styles.halfContainer, ...styles.textContainer }}>
+          <Text style={styles.title}>{WEATHER_OPTIONS[condition].title}</Text>
+          <Text style={styles.subtitle}>{WEATHER_OPTIONS[condition].subtitle}</Text>
         </View>
       </LinearGradient>
   );
@@ -29,17 +31,34 @@ Weather.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    flex: 1
+  },
+  temp: {
+    fontSize: 40,
+    color: 'white'
   },
   halfContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  temp: {
-    fontSize: 30,
-    color: 'white'
+  title: {
+    color: 'white',
+    fontSize: 40,
+    fontWeight: '300',
+    marginBottom: 10,
+    textAlign: 'left'
+  },
+  subtitle: {
+    fontWeight: '600',
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'left'
+  },
+  textContainer: {
+    alignItems: 'flex-start',
+    paddingHorizontal: 40,
+    justifyContent: 'center',
+    flex: 1
   }
 })
