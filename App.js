@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
-import Loading from './Loading';
+import Loading from './src/Components/Loading';
 import * as Location from 'expo-location';
 import * as secret from './secret';
 import axios from 'axios';
-import Weather from './Weather';
+import Weather from './src/Components/Weather';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [temp, setTemp] = useState(0);
+  const [condition, setCondition] = useState('');
 
   const BASE_URL = 'http://api.openweathermap.org/data/2.5/weather';
   const API_KEY = secret.KEY;
 
   const getWeather = async (lat, lon) => {
-    const { data } = await axios.get(BASE_URL, {
+    const {
+      data: {
+        main: { temp },
+        weather
+      }
+    } = await axios.get(BASE_URL, {
       params: {
         lat, lon,
         appid: API_KEY,
         units: 'metric' // 섭씨로 설정
       }
     });
-    console.log(data);
 
-    setTemp(Math.round(data.main.temp));
+    setTemp(Math.round(temp));
+    setCondition(weather[0].main);
     setIsLoading(false);
   }
 
@@ -43,6 +49,6 @@ export default function App() {
   }, []);
 
   return (
-      isLoading ? <Loading/> : <Weather temp={temp}/>
+      isLoading ? <Loading/> : <Weather temp={temp} condition={condition}/>
   );
 }
