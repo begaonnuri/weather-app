@@ -1,13 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { CONDITIONS } from '../constants';
+import { CONDITIONS, WEATHER_OPTIONS } from '../constants';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Weather({ temp, condition }) {
   return (
-      <View style={styles.container}>
-        <Text>{temp}{condition}</Text>
-      </View>
+      <LinearGradient colors={WEATHER_OPTIONS[condition].gradient}
+                      style={styles.container}>
+        <StatusBar barStyle="light-content"/>
+        <View style={styles.halfContainer}>
+          <MaterialCommunityIcons name={WEATHER_OPTIONS[condition].iconName}
+                                  size={100}
+                                  color="white"/>
+          <Text style={styles.temp}>{temp}℃</Text>
+        </View>
+        <View style={styles.halfContainer}>
+        </View>
+      </LinearGradient>
   );
 }
 
@@ -21,5 +32,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  halfContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  temp: {
+    fontSize: 30,
+    color: 'white'
   }
 })
